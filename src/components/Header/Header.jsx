@@ -57,7 +57,7 @@ function Header() {
 
   return (
     <>
-    <header className='py-6 shadow flex  z-50 w-full fixed text-gray-100 bg-navbarBg transition-all ease-in duration-200'>
+    <header className='py-6  flex  z-50 w-full fixed text-gray-100 bg-navbarBg transition-all ease-in duration-200'>
       <Container>          
            <nav className='flex justify-between'>
                <div className='mr-4'>

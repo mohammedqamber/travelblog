@@ -1,8 +1,17 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+
 
 function Home() {
+
+   
+  const user = useSelector(state => state.userData)
+
     return (
-        <div className="min-h-screen bg-gradient-to-r from-blue-300 to-purple-300 text-gray-900">
+        <div className="min-h-screen bg-gradient-to-r from-[#506081] to-[#354f86] text-gray-900">
+
+          {user && <div className='bg-navbarBg text-gray-400'><i>Welcome, {user.name} !</i></div> }
+
           <header className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('https://img.veenaworld.com/wp-content/uploads/2023/01/shutterstock_2044050407.jpg')" }}>
             <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white p-4">
               <h1 className="text-5xl font-bold mb-4">Welcome to Travel Wonders</h1>

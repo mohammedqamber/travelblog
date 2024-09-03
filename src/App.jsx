@@ -32,7 +32,20 @@ function App() {
   },[])
   
 
-  return !loading? (
+  // return !loading? (
+  //   <>
+  //   <Header/>
+  //   <div className='min-h-screen flex flex-wrap content-between pt-[4.5rem] bg-background text-textPrimary'>
+  //     <div className='w-full block'>
+  //     <ScollToTop/>
+  //        <Outlet/>
+  //     </div>
+  //   </div>
+  //   <Footer/>
+  //   </>
+  // ) : (<div className='w-full h-screen flex items-center justify-center'> <img src={LoadingIcon} className="loading-logo" /></div>)
+
+  return (
     <>
     <Header/>
     <div className='min-h-screen flex flex-wrap content-between pt-[4.5rem] bg-background text-textPrimary'>
@@ -43,7 +56,7 @@ function App() {
     </div>
     <Footer/>
     </>
-  ) : (<div className='w-full h-screen flex items-center justify-center'> <img src={LoadingIcon} className="loading-logo" /></div>)
+  )
 }
 
 export default App
