@@ -10,7 +10,7 @@ function Home() {
     return (
         <div className="min-h-screen bg-gradient-to-r from-[#506081] to-[#354f86] text-gray-900">
 
-          {user && <div className='bg-navbarBg text-gray-400 lg:pt-5'><i>Welcome, {user.name} !</i></div> }
+          {user && <div className='bg-navbarBg text-gray-400 lg:pt-3'><i>Welcome, {user.name} !</i></div> }
 
           <header className="relative h-96 bg-cover bg-center" style={{ backgroundImage: "url('https://img.veenaworld.com/wp-content/uploads/2023/01/shutterstock_2044050407.jpg')" }}>
             <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white p-4">
