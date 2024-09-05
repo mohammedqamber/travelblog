@@ -62,7 +62,11 @@ function MyPosts() {
             </Container>
         </div>
         </>
-    ) : ( <>No Post</>)
+    ) : ( 
+    <div className='text-lg text-black text-center'> 
+        No Posts Exist
+    </div>
+    )
 }
 
 export default MyPosts
