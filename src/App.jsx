@@ -48,7 +48,7 @@ function App() {
   return (
     <>
     <Header/>
-    <div className='min-h-screen flex flex-wrap content-between pt-[4.5rem] bg-background text-textPrimary'>
+    <div className='min-h-screen flex flex-wrap content-between pt-[5rem] bg-background text-textPrimary'>
       <div className='w-full block'>
       <ScollToTop/>
          <Outlet/>
