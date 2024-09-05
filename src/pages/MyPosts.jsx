@@ -7,27 +7,33 @@ import { useNavigate } from 'react-router-dom'
 
 function MyPosts() {
 
-    const[MyPosts, setMyPosts] = useState()
+    const [MyPosts, setMyPosts] = useState([])
     const [exist, setExist] = useState(false)
     const navigate = useNavigate()
     const userData = useSelector(state => state.userData)
-    const id = userData.$id
+    const id = userData? userData.$id : null
    
-    useEffect(()=>{
-        service.getMyPosts(id)
-        .then((posts) => {
-            if(posts.total === 0){
-                
-                setExist(false)
-            }
-            else {
-                setMyPosts(posts.documents)
-                setExist(true)
-            }
-                
-        })
-        .catch((e)=> console.log("Mypost page:: ", e))
-       
+    useEffect(() => {
+        if (id) {
+            service.getMyPosts(id)
+                .then((posts) => {
+                    if (posts.total === 0) {
+
+                        setExist(false)
+                    }
+                    else {
+                        setMyPosts(posts.documents)
+                        setExist(true)
+                    }
+
+                })
+                .catch((e) => console.log("Mypost page:: ", e))
+        }
+        else {
+            console.log("User ID is not available.");
+            setExist(false);
+        }
+
     })
 
     function deletePost(id) {
