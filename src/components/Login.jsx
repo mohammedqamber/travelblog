@@ -10,11 +10,13 @@ import { useForm } from 'react-hook-form'
 function Login() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [loading, setLoading] = useState(false)
     const {register, handleSubmit} = useForm()
     const[error, setError] = useState("")
 
     const login = async(data) => {
         setError("")
+        setLoading(true)
         try {
           const session = await authService.login(data)
           if(session){
@@ -31,6 +33,9 @@ function Login() {
 
             setError(error.message)
             console.log(error.message)
+        }
+        finally{
+            setLoading(false)
         }
     }
     
@@ -53,7 +58,7 @@ function Login() {
                     Sign Up
                    </Link>
                 </p>
-                 {error && <p className='text-red-600 mt-8 text-center'>{error}</p>} 
+                 {error && <p className='text-red-600 mt-8 text-center'>Invalid Email or Password.</p>} 
 
                 <form onSubmit={handleSubmit(login)} className='mt-8'>
                    <div className='space-y-5'>
@@ -83,7 +88,7 @@ function Login() {
                             required : true
                         })}
                        />
-                       <Button type='submit' className='w-full'>Log In</Button>
+                       <Button type='submit' className='w-full'>{loading? <i>Logging In...</i> : "Log In"}</Button>
                    </div>
                 </form>
             </div>

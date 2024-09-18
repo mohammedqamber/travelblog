@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {Button ,Input, Select, RTE} from '../index'
 import service from '../../appwrite/config'
@@ -19,50 +19,60 @@ function PostForm({post}) {
 
     const navigate = useNavigate()
     const userData = useSelector( state => state.userData)
-    console.log(userData)
+    const[loading, setLoading] = useState(false)
 
 
     const submit = async(data) => {
-        console.log(data);
-        if(post){
-            const file = data.image[0] ? service.uploadFile(data.image[0]) : null
-
-            if(file) {
-                service.deleteFile(post.img)
+        setLoading(true)
+        // console.log(data);
+        try {
+            if(post){
+                const file = data.image[0] ? service.uploadFile(data.image[0]) : null
+    
+                if(file) {
+                    service.deleteFile(post.img)
+                }
+    
+                const dbPost = await service.updatePost(post.$id, {
+                    ...data,
+                    img : file? file.$id : undefined
+                })
+    
+                if(dbPost) {
+                    navigate(`/posts/${dbPost.$id}`)
+                }
             }
-
-            const dbPost = await service.updatePost(post.$id, {
-                ...data,
-                img : file? file.$id : undefined
-            })
-
-            if(dbPost) {
-                navigate(`/posts/${dbPost.$id}`)
+            else{
+                const file = await service.uploadFile(data.image[0])
+    
+                if(file){
+                   
+                   console.log(file);
+    
+                   const fileId = file.$id
+                   data.img = fileId
+    
+                   const dbPost = await service.createPost({
+                    ...data,       
+                    userID : userData.$id,
+                    author: userData.name
+                   })
+    
+                   
+    
+                   if(dbPost){
+                          navigate(`/posts/${dbPost.$id}`)
+                   }
+                }
             }
         }
-        else{
-            const file = await service.uploadFile(data.image[0])
-
-            if(file){
-               
-               console.log(file);
-
-               const fileId = file.$id
-               data.img = fileId
-
-               const dbPost = await service.createPost({
-                ...data,       
-                userID : userData.$id,
-                author: userData.name
-               })
-
-               
-
-               if(dbPost){
-                      navigate(`/posts/${dbPost.$id}`)
-               }
-            }
+        catch(e) {
+            console.log(e);          
         }
+        finally{
+            setLoading(false)
+        }
+   
     }
 
     const slugTransform = useCallback((value) => {
@@ -133,7 +143,7 @@ function PostForm({post}) {
                     {...register("status", { required: true })}
                 />
                 <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
-                    {post ? "Update" : "Submit"}
+                    {loading ? "Submitting..." : "Submit"}
                 </Button>
             </div>
         </form>

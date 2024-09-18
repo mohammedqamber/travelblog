@@ -9,11 +9,15 @@ import { useForm } from 'react-hook-form'
 function SignUp() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {register, handleSubmit} = useForm()
+    const {register, handleSubmit, formState: { errors },} = useForm()
     const[error, setError] = useState("")
-
+    const[loading, setLoading] = useState(false)
+    
     const signUp = async(data) => {
-        setError("")
+
+        
+        setLoading(true)
+
         try {
            const userData =  await authService.createAccount(data)
            if(userData) {
@@ -29,7 +33,10 @@ function SignUp() {
         } catch (error) {
             setError(error.message)
             console.log("hello")
+        } finally {
+            setLoading(false)
         }
+         
     }
     
     return (
@@ -70,7 +77,9 @@ function SignUp() {
                                 required: true,
                                 validate : {
                                         matchPattern: (value) => {
-                                            /^([\w\.\-_]+)?\w+@[\w-_]+(\.\w+){1,}$/.test(value) || "Email address must be valid"
+                                           return (
+                                             /^([\w\.\-_]+)?\w+@[\w-_]+(\.\w+){1,}$/.test(value) || "Email address must be valid"
+                                           )
                                         }
                                      }
                               })}
@@ -80,10 +89,19 @@ function SignUp() {
                                label = "Password: "
                                type = "password"
                                placeholder = "Enter your password"
-                               {...register("password",{required: true})}
+                               {...register("password",{
+                                required: "Password is required",
+                                minLength: {value : 8, message: "Password must be atleast 8 characters long"}
+                               })}
                             />
+                            {errors.password && <p>{errors.password.message}</p>}
 
-                            <Button children="Sign Up" className='w-full' type='submit'></Button>
+                            {/* <Button children="Sign Up" className='w-full' type='submit'></Button> */}
+                            <Button className='w-full' type='submit'>
+                                {
+                                    loading ? <i>Signing Up...</i> : "Sign Up" 
+                                }
+                            </Button>
                         </div>
                     </form>
             </div>

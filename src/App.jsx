@@ -7,10 +7,12 @@ import { useEffect } from 'react'
 import { login, logout } from './store/authSlice'
 import {Header, Footer} from './components/index'
 import { Outlet } from 'react-router-dom'
-import LoadingIcon from "../imgAsset/loading.svg"
+
 import ScollToTop from './components/ScollToTop'
+import Loading  from './components/Loader'
 
 function App() {
+
   const[loading, setLoading] = useState(true)
   const dispatch = useDispatch()
 
@@ -32,23 +34,10 @@ function App() {
   },[])
   
 
-  // return !loading? (
-  //   <>
-  //   <Header/>
-  //   <div className='min-h-screen flex flex-wrap content-between pt-[4.5rem] bg-background text-textPrimary'>
-  //     <div className='w-full block'>
-  //     <ScollToTop/>
-  //        <Outlet/>
-  //     </div>
-  //   </div>
-  //   <Footer/>
-  //   </>
-  // ) : (<div className='w-full h-screen flex items-center justify-center'> <img src={LoadingIcon} className="loading-logo" /></div>)
-
-  return (
+  return !loading? (
     <>
     <Header/>
-    <div className='min-h-screen flex flex-wrap content-between pt-[5rem] bg-background text-textPrimary'>
+    <div className='min-h-screen flex flex-wrap content-between pt-[4.5rem] bg-background text-textPrimary'>
       <div className='w-full block'>
       <ScollToTop/>
          <Outlet/>
@@ -56,7 +45,20 @@ function App() {
     </div>
     <Footer/>
     </>
-  )
+  ) : (<Loading/>)
+
+  // return (
+  //   <>
+  //   <Header/>
+  //   <div className='min-h-screen flex flex-wrap content-between pt-[4.51rem] bg-background text-textPrimary'>
+  //     <div className='w-full block'>
+  //     <ScollToTop/>
+  //        <Outlet/>
+  //     </div>
+  //   </div>
+  //   <Footer/>
+  //   </>
+  // )
 }
 
 export default App
