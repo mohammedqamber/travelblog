@@ -9,7 +9,7 @@ function Skeleton() {
 
                 <div className="w-full animate-pulse border-2 border-[#eff0f0] bg-gray-100 rounded-sm p-3 aspect-[3/2]">
                     <div className='w-full  justify-center mb-4 '>
-                        <div className='rounded-sm lg:h-40 h-80 lg:w-[226.07px] animate-pulse bg-[#eff0f0]'>
+                        <div className='rounded-sm lg:h-40 h-60 lg:w-[226.07px] animate-pulse bg-[#eff0f0]'>
 
                         </div>
                     </div>
