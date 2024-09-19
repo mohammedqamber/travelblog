@@ -15,7 +15,7 @@ function AllPosts() {
         service.getPosts()
             .then((posts) => setPosts(posts.documents))
             .catch((e) => console.log("Addpost page:: ", e))
-            .finally(() => setLoading(false))
+            .finally(() => setLoading(true))
     }, [])
 
     return (
